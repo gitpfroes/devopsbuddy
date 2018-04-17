@@ -1,24 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <body>
 
-    <div th:fragment="common-navbar" >
-        <nav class="navbar navbar-default">
-		  <div class="container-fluid">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">DevOps Buddy</a>
-		    </div>
-		    <ul class="nav navbar-nav">
-		      <li class="active"><a href="/" th:text="#{navbar.home.text}" ></a></li>
-		      <li><a th:text="#{navbar.about.text}" href="/about"></a></li>
-              <li><a th:text="#{navbar.contact.text}" href="/contact"></a></li>
-		      <li><a href="#">Page 3</a></li>
-		    </ul>
-		  </div>
-		</nav>
-    </div>
+	<nav th:fragment="common-navbar" class="navbar navbar-expand-sm navbar-custom">
+	    <a href="/" class="navbar-brand">Custom</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
+	        <i class="fa fa-bars fa-lg py-1 text-white"></i>
+	    </button>
+	    <div class="navbar-collapse collapse" id="navbarCustom">
+	        <ul class="navbar-nav">
+	            <li class="nav-item active">
+	                <a class="nav-link" th:text="#{navbar.home.text}" href="/"></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#">Link</a>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                  Dropdown
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	                    <a class="dropdown-item" th:text="#{navbar.about.text}"  href="/about"></a>
+	                    <a class="dropdown-item" th:text="#{navbar.contact.text}" href="/contact"></a>
+	                </div>
+	            </li>
+	        </ul>
+	        <span class="ml-auto navbar-text">Text</span>
+	    </div>
+	</nav>
 
 </body>
 </html>
