@@ -26,8 +26,14 @@
 	                </div>
 	            </li>
 	        </ul>
-	        <span class="ml-auto navbar-text">Text</span>
 	    </div>
+    <div class="navbar-collapse">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/login}" th:text="#{navbar.login.text}"></a>
+            </li>
+        </ul>
+    </div>
 	</nav>
 
 </body>
