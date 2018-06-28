@@ -13,6 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /** Public URLs. */
+	/*Spring Security protects everything by default*/
     private static final String[] PUBLIC_MATCHERS = {
             "/webjars/**",
             "/css/**",
