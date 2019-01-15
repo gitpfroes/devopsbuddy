@@ -10,7 +10,6 @@ import br.com.caprica.spring.devopsbuddy.backend.service.MockEmailService;
 
 @Configuration
 @Profile("dev")
-@PropertySource("file:///D:\\Controle\\application-dev.properties")
 public class DevelopmentConfig {
 	@Bean
     public EmailService emailService() {
