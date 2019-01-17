@@ -1,25 +1,34 @@
 package br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend;
 
-import java.io.Serializable;
+import br.com.caprica.spring.devopsbuddy.enums.PlansEnum;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
+/**
+ * Created by tedonema on 28/03/2016.
+ */
 @Entity
 public class Plan implements Serializable {
 
-	/**
-	 * 
-	 */
+	/** The Serial Version UID for Serializable classes. */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private int id;
+
 	private String name;
-	private String description;
-	
-	/**Default constructor*/
-	public Plan() {}
+
+	/** Default constructor. */
+	public Plan() {
+
+	}
+
+	public Plan(PlansEnum plansEnum) {
+		this.id = plansEnum.getId();
+		this.name = plansEnum.getPlanName();
+	}
 
 	public int getId() {
 		return id;
@@ -37,23 +46,19 @@ public class Plan implements Serializable {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Plan plan = (Plan) o;
+
+		return id == plan.id;
+
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	
 	@Override
 	public int hashCode() {
-		return this.id;
+		return id;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		Plan plan = (Plan) obj;
-		return this.id == plan.getId();
-	}
-	
 }
