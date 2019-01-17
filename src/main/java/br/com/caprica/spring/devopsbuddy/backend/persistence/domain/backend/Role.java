@@ -1,5 +1,7 @@
 package br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend;
 
+import br.com.caprica.spring.devopsbuddy.enums.RolesEnum;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +28,11 @@ public class Role implements Serializable {
 
     public Role() {
 
+    }
+
+    public Role(RolesEnum role) {
+        this.setId(role.getId());
+        this.setName(role.getRoleName());
     }
 
 	public int getId() {
