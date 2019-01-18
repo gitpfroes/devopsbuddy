@@ -9,6 +9,8 @@ import br.com.caprica.spring.devopsbuddy.backend.persistence.repositories.PlanRe
 import br.com.caprica.spring.devopsbuddy.backend.persistence.repositories.RoleRepository;
 import br.com.caprica.spring.devopsbuddy.backend.persistence.repositories.UserRepository;
 import br.com.caprica.spring.devopsbuddy.enums.PlansEnum;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,21 +30,34 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+
     public User createUser(User user, PlansEnum plansEnum, Set<UserRole> userRoles) {
-        Plan plan = new Plan(plansEnum);
+        User localUser = userRepository.findByUsername(user.getUsername());
 
-        if(!planRepository.exists(plansEnum.getId())){
-            plan = planRepository.save(plan);
+        if (localUser != null) {
+            LOG.info("User with username {} and email {} already exist. Nothing will be done. ",
+                    user.getUsername(), user.getEmail());
+        } else {
+
+            Plan plan = new Plan(plansEnum);
+            // It makes sure the plans exist in the database
+            if (!planRepository.exists(plansEnum.getId())) {
+                plan = planRepository.save(plan);
+            }
+
+            user.setPlan(plan);
+
+            for (UserRole ur : userRoles) {
+                roleRepository.save(ur.getRole());
+            }
+
+            user.getUserRoles().addAll(userRoles);
+
+            localUser = userRepository.save(user);
+
         }
 
-        user.setPlan(plan);
-
-        for (UserRole userRole : userRoles){
-            roleRepository.save(userRole.getRole());
-        }
-
-        user.getUserRoles().addAll(userRoles);
-
-        return user;
+        return localUser;
     }
 }
