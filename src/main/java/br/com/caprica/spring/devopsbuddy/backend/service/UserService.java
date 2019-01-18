@@ -2,7 +2,6 @@ package br.com.caprica.spring.devopsbuddy.backend.service;
 
 
 import br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend.Plan;
-import br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend.Role;
 import br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend.User;
 import br.com.caprica.spring.devopsbuddy.backend.persistence.domain.backend.UserRole;
 import br.com.caprica.spring.devopsbuddy.backend.persistence.repositories.PlanRepository;
@@ -12,6 +11,7 @@ import br.com.caprica.spring.devopsbuddy.enums.PlansEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +30,15 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     public User createUser(User user, PlansEnum plansEnum, Set<UserRole> userRoles) {
+        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+
         User localUser = userRepository.findByUsername(user.getUsername());
 
         if (localUser != null) {
